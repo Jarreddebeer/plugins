@@ -189,6 +189,9 @@ export function nodeResolve(opts = {}) {
       const isRequire =
         opts && opts.custom && opts.custom['node-resolve'] && opts.custom['node-resolve'].isRequire;
       const exportConditions = isRequire ? conditionsCjs : conditionsEsm;
+      
+      if (useBrowserOverrides && !exportConditions.includes('browser'))
+        exportConditions.push('browser');
 
       const resolvedWithoutBuiltins = await resolveImportSpecifiers({
         importer,
